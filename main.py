@@ -12,7 +12,6 @@ if 'current_page' not in st.session_state:
     st.session_state.current_page = "Home"
 
 PRODUCT_NAME = "AgriKit"
-PRODUCT_PRICE = 249.99
 
 # --- Apply Minimal Styling ---
 st.set_page_config(page_title="AgriKit", layout="wide")
@@ -48,10 +47,10 @@ if st.sidebar.button("📊 Dashboard"):
     st.session_state.current_page = "Dashboard"
 if st.sidebar.button("🔮 Prediction"):
     st.session_state.current_page = "Prediction"
-if st.sidebar.button("🛍️ Store"):
-    st.session_state.current_page = "Store"
-if st.sidebar.button("🧺 Cart"):
-    st.session_state.current_page = "Cart"
+if st.sidebar.button("🥕 About Us"):
+    st.session_state.current_page = "About Us"
+if st.sidebar.button("☎️ Contact Us"):
+    st.session_state.current_page = "Contact Us"
 
 # --- Login Page ---
 def login():
@@ -91,7 +90,6 @@ def home():
         - 🔄 Smart irrigation automation
         - 🔮 Crop yield predictions based on environmental data
 
-        👉 Visit the store tab to view more information on pricing and purchasing.
     """)
 
 # --- Dashboard Page ---
@@ -147,29 +145,13 @@ def prediction():
     st.metric(f"Estimated Yield for {crop} (tons/ha)", f"{adjusted_yield:.2f}")
 
 # --- Store Page ---
-def store():
-    st.title("🛍️ Store")
-    st.image("https://images.unsplash.com/photo-1581090700227-1e8eaf10c177", caption=PRODUCT_NAME, use_column_width=True)
-    st.subheader(PRODUCT_NAME)
-    st.write(f"**Price:** ${PRODUCT_PRICE}")
-    if st.button("Add to Cart"):
-        st.session_state.cart.append({"product": PRODUCT_NAME, "price": PRODUCT_PRICE})
-        st.success("Added to cart!")
+def about():
+    st.title("🥕 About Us")
+    st.write("insert text")
 
-# --- Cart Page ---
-def cart():
-    st.title("🧺 Your Cart")
-    if not st.session_state.cart:
-        st.info("Your cart is empty.")
-        return
-    total = 0
-    for item in st.session_state.cart:
-        st.write(f"- {item['product']} - ${item['price']}")
-        total += item['price']
-    st.markdown(f"### 🧾 Total: ${total:.2f}")
-    if st.button("Checkout"):
-        st.session_state.cart = []
-        st.success("✅ Checkout complete! Thank you for your purchase.")
+def contact():
+    st.title("☎️ Contact Us")
+    st.write("Contact us at: agrikit@gmail.com or 212-228-3813 for any maintenance or product concerns")
 
 # --- Route Pages ---
 if st.session_state.current_page == "Home":
@@ -182,7 +164,7 @@ elif st.session_state.current_page == "Dashboard":
     dashboard()
 elif st.session_state.current_page == "Prediction":
     prediction()
-elif st.session_state.current_page == "Store":
-    store()
-elif st.session_state.current_page == "Cart":
-    cart()
+elif st.session_state.current_page == "About Us":
+    about()
+elif st.session_state.current_page == "Contact Us":
+    contact()
