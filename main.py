@@ -1,4 +1,4 @@
-import streamlit as st
+mport streamlit as st
 import random
 
 # --- Session State Initialization ---
@@ -41,7 +41,7 @@ if st.sidebar.button("🏠 Home"):
 if not st.session_state.logged_in:
     if st.sidebar.button("🔐 Login"):
         st.session_state.current_page = "Login"
-    if st.sidebar.button("🆕 Create Account"):
+    if st.sidebar.button("🤞 Create Account"):
         st.session_state.current_page = "Create Account"
 if st.sidebar.button("📊 Dashboard"):
     st.session_state.current_page = "Dashboard"
@@ -51,6 +51,9 @@ if st.sidebar.button("🥕 About Us"):
     st.session_state.current_page = "About Us"
 if st.sidebar.button("☎️ Contact Us"):
     st.session_state.current_page = "Contact Us"
+if st.sidebar.button("📘 About the Product"):
+    st.session_state.current_page = "About Product"
+
 
 # --- Login Page ---
 def login():
@@ -66,9 +69,10 @@ def login():
         else:
             st.error("Username and password required")
 
+
 # --- Create Account Page ---
 def create_account():
-    st.title("🆕 Create Account")
+    st.title("🤞 Create Account")
     username = st.text_input("Choose a Username")
     password = st.text_input("Choose a Password", type="password")
     confirm_password = st.text_input("Confirm Password", type="password")
@@ -79,6 +83,7 @@ def create_account():
             st.error("Passwords do not match")
         else:
             st.success(f"Account created for {username}! You can now log in.")
+
 
 # --- Home Page ---
 def home():
@@ -91,6 +96,7 @@ def home():
         - 🔮 Crop yield predictions based on environmental data
 
     """)
+
 
 # --- Dashboard Page ---
 def dashboard():
@@ -117,6 +123,7 @@ def dashboard():
     else:
         st.success("✅ Soil moisture is adequate. Irrigation system on standby.")
 
+
 # --- Prediction Page ---
 def prediction():
     st.title("🔮 Crop Yield Prediction")
@@ -132,7 +139,6 @@ def prediction():
     with col3:
         nutrients = st.slider("Nutrient Level (0-1)", 0.0, 1.0, 0.5)
 
-    # Simple mock model logic based on crop type
     crop_factors = {
         "Wheat": 1.0,
         "Corn": 1.2,
@@ -144,14 +150,50 @@ def prediction():
 
     st.metric(f"Estimated Yield for {crop} (tons/ha)", f"{adjusted_yield:.2f}")
 
-# --- Store Page ---
+
+# --- About Us Page ---
 def about():
     st.title("🥕 About Us")
-    st.write("insert text")
+    st.write("""
+    We are a team of Brooklyn Tech students who are focused on using AI not just for convenience or luxury, but for real-world impact. Our mission began with a simple belief: that farmers are the backbone of society. Their work sustains communities, economies, and nations, yet they often lack access to cutting-edge technology.
 
+    We chose agriculture as the foundation for this project because it's a field where technology can directly transform lives. Our goal is to turn digital innovation into practical, physical solutions that empower farmers to be more efficient and make data-driven decisions. 
+
+    By integrating AI, IoT, and serverless cloud services, we're helping to bridge the gap between high-tech capability and grassroots needs. It's not just about improving crop yields — it's about uplifting the people and communities that depend on them.
+    """)
+
+
+# --- Contact Page ---
 def contact():
     st.title("☎️ Contact Us")
     st.write("Contact us at: agrikit@gmail.com or 212-228-3813 for any maintenance or product concerns")
+
+
+# --- About the Product Page ---
+def about_product():
+    st.title("📘 About the Product")
+    st.markdown("""
+    ## Smart AI-Driven Farming Assistant
+
+    This system brings together:
+
+    - **ESP32 & Sensors** to gather soil moisture, pH, temperature, rainfall, and light data.
+    - **AWS API Gateway** as the secure communication bridge between the ESP32, cloud AI, and mobile app.
+    - **AWS Lambda** to run on-demand code to process data, run AI models, and handle user commands.
+    - **AWS DynamoDB** for fast, secure, scalable data storage.
+    - **AWS SageMaker** for crop yield prediction.
+    - **AWS Bedrock** to offer intelligent in-app assistance.
+    - **Mobile App** to view data, receive AI decisions, and send manual commands.
+
+    ### How It Works:
+    1. ESP32 collects and sends data via API Gateway to Lambda.
+    2. Lambda triggers AI models and stores results in DynamoDB.
+    3. Mobile app gets data via GET requests and sends commands via POST.
+    4. ESP32 receives commands from cloud and acts on them (e.g., irrigate).
+
+    This architecture ensures real-time, automated decision-making to help farmers improve yield and efficiency through precision agriculture.
+    """)
+
 
 # --- Route Pages ---
 if st.session_state.current_page == "Home":
@@ -168,3 +210,5 @@ elif st.session_state.current_page == "About Us":
     about()
 elif st.session_state.current_page == "Contact Us":
     contact()
+elif st.session_state.current_page == "About Product":
+    about_product()
